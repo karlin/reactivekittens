@@ -1,7 +1,6 @@
 class Klient < AFHTTPClient
   def self.withBaseURL(url)
-    client = Klient.clientWithBaseURL(NSURL.URLWithString(url))
-    client
+    Klient.clientWithBaseURL(NSURL.URLWithString(url))
   end
 end
 
@@ -31,7 +30,10 @@ end
 class KittenPresenter
   def initialize(model, view)
     # how many cats can we have? Clear them out when we modify it.
-    model.kittenKount = view.kittyStepper.map! {|v| v.value}.startWith(1)
+    model.kittenKount = view.kittyStepper.map! do |step|
+      step.value
+    end.startWith(1)
+
     model.kittenKount.each do |_|
       view.clear
     end
@@ -125,7 +127,6 @@ class AppDelegate
   end
 
   def viewFromStoryBoard(name)
-    vc = storyboard.instantiateViewControllerWithIdentifier name
-    vc
+    storyboard.instantiateViewControllerWithIdentifier name
   end
 end
