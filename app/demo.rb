@@ -12,8 +12,10 @@ class KittenModel
   end
 
   def kittens
-    # make a sequence signal from a random number array of a given size
-    strays = @kittenKount.times.map {rand(100)+100}.rac_sequence.signal
+    # make a sequence signal from a random number array with a given size
+    strays = @kittenKount.map! do |number|
+      number.to_i.times.map {rand(200)+100}.rac_sequence.signal
+    end.flatten
 
     # map that into a new signal of signals, one for each HTTP req, keeping the HTTP response body
     # flatten it to get the HTTP responses instead of the signal itself
@@ -28,10 +30,13 @@ end
 
 class KittenPresenter
   def initialize(model, view)
-    # how many cats can we have?
-    model.kittenKount = 4
+    # how many cats can we have? Clear them out when we modify it.
+    model.kittenKount = view.kittyStepper.map! {|v| v.value}.startWith(1)
+    model.kittenKount.each do |_|
+      view.clear
+    end
 
-    # wire up the signal from the model
+    # wire up the image data signals from the model
     view.kittens = model.kittens
 
     # listen for events from the 'view'
@@ -44,29 +49,33 @@ end
 class KittenCell < UICollectionViewCell
   REUSE_ID = 'kitten-cell'
   extend IB
-  attr_accessor :image, :label
+  attr_accessor :image
 
   outlet :image, UIImageView
-  outlet :label, UILabel
 
   def kitty=(data)
     image.image = UIImage.imageWithData(data)
   end
-
-  def label=(text)
-    label.text = text
-  end
 end
 
 class KittensViewController < UICollectionViewController
-  attr_accessor :kittyKlicked, :kittens, :kittenCollectionView, :kittenCells
+  attr_accessor :kittyKlicked, :kittens, :kittenCollectionView, :kittenCells, :stepper
   extend IB
 
   outlet :kittenCollectionView, UICollectionView
+  outlet :stepper, UIStepper
+
+  def clear
+    @kittenCells = []
+  end
 
   def kittyKlicked
     @kittyKlicked ||= RACCommand.command
     @kittyKlicked
+  end
+
+  def kittyStepper
+    stepper.rac_signalForControlEvents(UIControlEventValueChanged)
   end
 
   def kittens=(signal)
@@ -84,7 +93,6 @@ class KittensViewController < UICollectionViewController
     rowData = @kittenCells[row]
     cellView = kittenCollectionView.dequeueReusableCellWithReuseIdentifier('kitten-cell', forIndexPath:indexPath)
     cellView.kitty = rowData[:image]
-    cellView.label = rowData[:label]
     cellView
   end
 
