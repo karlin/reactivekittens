@@ -1,0 +1,16 @@
+vendor/bundle
+.DS_Store
+**/.DS_Store
+*.dat*.???
+bin
+ib.xcodeproj
+build
+build.output
+.repl_history
+vendor/Pods
+vendor/ReactiveMotion/build-*
+vendor/BlockBuilder/build-*
+
+**/*.sw?
+*.sw?
+tags

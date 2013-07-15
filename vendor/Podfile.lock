@@ -1,0 +1,35 @@
+PODS:
+  - AFNetworking (1.3.1)
+  - AFNetworking-RACExtensions (0.1.1):
+    - AFNetworking (~> 1.0)
+    - ReactiveCocoa (~> 1.0)
+  - JRSwizzle (1.0)
+  - libextobjc/EXTConcreteProtocol (0.2.5):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTKeyPathCoding (0.2.5):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTScope (0.2.5):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/RuntimeExtensions (0.2.5)
+  - ReactiveCocoa (1.9.5):
+    - ReactiveCocoa/Core
+    - ReactiveCocoa/RACExtensions
+  - ReactiveCocoa/Core (1.9.5):
+    - JRSwizzle (~> 1.0)
+    - libextobjc/EXTConcreteProtocol (~> 0.2.5)
+    - libextobjc/EXTKeyPathCoding (~> 0.2.5)
+    - libextobjc/EXTScope (~> 0.2.5)
+  - ReactiveCocoa/RACExtensions (1.9.5):
+    - ReactiveCocoa/Core
+
+DEPENDENCIES:
+  - AFNetworking-RACExtensions
+
+SPEC CHECKSUMS:
+  AFNetworking: 9ec8aafb9269236a7630bd8d9838ce2ba30fa2a0
+  AFNetworking-RACExtensions: 74c11fc959f907864a3ec995c40e0b5e35bf1ae7
+  JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
+  libextobjc: 2cbc74caf8bdc74a86fdf24673f773c83424ea98
+  ReactiveCocoa: 591f49bb58dc2756e4876d3c1c3df55730a05505
+
+COCOAPODS: 0.22.2
